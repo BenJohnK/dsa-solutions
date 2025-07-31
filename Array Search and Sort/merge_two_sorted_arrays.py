@@ -24,7 +24,7 @@ def merge_two_sorted_arrays(a,b):
 
 
 
-a = list(map(lambda x: int(x), input().split()))
-b = list(map(lambda x: int(x), input().split()))
+# a = list(map(lambda x: int(x), input().split()))
+# b = list(map(lambda x: int(x), input().split()))
 
-print(merge_two_sorted_arrays(a,b))
+# print(merge_two_sorted_arrays(a,b))
