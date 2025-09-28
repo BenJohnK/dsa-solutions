@@ -1,7 +1,6 @@
 def printNonRepeated(arr):
     #Your code here
     counter = {}
-    count = 0
     new_arr = []
     for x in arr:
         counter[x] = counter.get(x, 0) + 1

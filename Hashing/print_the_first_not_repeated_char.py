@@ -1,7 +1,6 @@
 def nonRepeatingChar(s):
     #code here
     counter = {}
-    count = 0
     for x in s:
         counter[x] = counter.get(x, 0) + 1
     for k in counter:
