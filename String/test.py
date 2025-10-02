@@ -1,6 +1,6 @@
-s = "ana"
+s = "a "
 for x in s:
-    print(x.upper())
+    print(x.lower())
 counter_dict = {}
 for x in s:
     counter_dict[x.upper()] = 1
