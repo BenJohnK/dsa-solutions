@@ -13,5 +13,12 @@ def print_linked_list(head):
         print(curr.data)
         curr = curr.next
 
-print_linked_list(head)
+def insert_at_beginning(head, x):
+    new_node = Node(x)
+    new_node.next = head
+    head = new_node
+    return head
 
+
+head = insert_at_beginning(head, 5)
+print_linked_list(head)
