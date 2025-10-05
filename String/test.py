@@ -1,4 +1,1 @@
-x = 5
-y=x
-x=3
-print(y)
+print((5).__add__(10))
