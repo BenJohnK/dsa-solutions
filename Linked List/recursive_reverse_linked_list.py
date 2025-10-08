@@ -17,16 +17,15 @@ def print_linked_list(head):
         curr = curr.next
 
 def reverse_linked_list(head):
-    if not head or not head.next:
+    if not head:
+        return None
+    if not head.next:
         return head
-    curr = head.next
+    new_head = reverse_linked_list(head.next)
+    head.next.next = head
     head.next = None
-    while curr:
-        temp = curr.next
-        curr.next = head
-        head = curr
-        curr = temp
-    return head
+    return new_head
+
 
 head = reverse_linked_list(head)
 print_linked_list(head)
