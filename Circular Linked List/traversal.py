@@ -11,7 +11,11 @@ head.next.next.next = Node(60)
 head.next.next.next.next = head
 
 def print_linked_list(head):
+    if not head:
+        return
     print(head.data)
+    if not head.next:
+        return
     curr = head.next
     while curr != head:
         print(curr.data)
