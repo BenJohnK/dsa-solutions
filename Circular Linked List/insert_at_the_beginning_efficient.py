@@ -18,18 +18,16 @@ def print_linked_list(head):
         print(curr.data)
         curr = curr.next
 
-def insert_at_the_beginning(head, x):
+def insert_at_the_beginning(head: Node, x):
     if not head:
         new_node = Node(x)
         new_node.next = new_node
         return new_node
-    curr = head.next
-    while curr.next != head:
-        curr = curr.next
     new_node = Node(x)
-    curr.next = new_node
-    new_node.next = head
-    return new_node
+    new_node.next = head.next
+    head.next = new_node
+    head.data, new_node.data = new_node.data, head.data
+    return head
 
 head = insert_at_the_beginning(head, 20)
 
