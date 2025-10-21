@@ -28,4 +28,3 @@ def insert_at_the_beginning(head, x):
 print_doubly_linked_list(head)
 head = insert_at_the_beginning(head, 20)
 print_doubly_linked_list(head)
-    
