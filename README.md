@@ -1,2 +1,3 @@
 # dsa-solutions
-This repo contains solutions to common DSA problems I solved in Python while preparing for technical interviews. Categorized by topic, each solution is written for clarity and efficiency.
+I believe solving problems is the best way to grow as an engineer. This repository captures my journey of continuous learning and daily problem-solving in Python. 
+Happy to learn something new everyday.
