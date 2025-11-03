@@ -18,7 +18,7 @@ def infix_to_postfix(expr: str):
                 stack.append(ch)
             elif precedence.get(ch) < precedence.get(stack[-1]):
                 i = len(stack) - 1
-                while i != -1 and stack[i] != "(":
+                while i != -1 and stack[i] != "(" and precedence.get(stack[i]) >= precedence.get(ch):
                     p = stack.pop()
                     output += p
                     i = i -1
