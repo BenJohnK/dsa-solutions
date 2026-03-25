@@ -10,6 +10,7 @@ head = ListNode(10)
 head.next = ListNode(20)
 head.next.next = ListNode(30)
 head.next.next.next = ListNode(40)
+head.next.next.next.next = ListNode(50)
 
 
 
@@ -19,7 +20,7 @@ head.next.next.next = ListNode(40)
 # 1 -> 4 -> 2 -> 3
 
 
-# 10 -> 20 -> 30 -> 40 -> 50 AND 50 -> 40 -> null
+# 10 -> 20 -> 30 AND 50 -> 40 -> null
 
 # 10 -> 50 -> 20 -> 40 -> 30
 
@@ -56,25 +57,29 @@ class Solution:
             return
 
         middle_ListNode = self.find_middle_ListNode(head)
+        curr = head
+        while curr:
+            if curr.next == middle_ListNode:
+                curr.next = None
+            curr = curr.next
         reversed_head = self.reverse_list(middle_ListNode)
         curr = head
         next_node = reversed_head
-        tail = head
-        while tail:
-            if not curr and not next_node:
-                break
+
+        # 10 -> 20 -> 30 AND 50 -> 40 -> null
+
+        # 10 -> 50 -> 20 -> 40 -> 30
+
+        while next_node:
             temp1 = curr.next
-            if next_node:
-                temp2 = next_node.next
-            tail.next = curr
+            temp2 = next_node.next
+
             curr.next = next_node
-            tail = next_node
-            curr = temp1
+            next_node.next = temp1
             next_node = temp2
+            curr = temp1
+
         self.print_list(head)
-
-
-        
 
 obj = Solution()
 obj.reorderList(head)
