@@ -10,7 +10,7 @@ head = ListNode(10)
 head.next = ListNode(20)
 head.next.next = ListNode(30)
 head.next.next.next = ListNode(40)
-head.next.next.next.next = ListNode(50)
+
 
 
 
@@ -37,7 +37,7 @@ class Solution:
         while curr.next and curr.next.next:
             middle = middle.next
             curr = curr.next.next
-        return middle.next
+        return middle, middle.next
     
     def reverse_list(self, middle):
         prev = None
@@ -56,12 +56,8 @@ class Solution:
         if not head.next:
             return
 
-        middle_ListNode = self.find_middle_ListNode(head)
-        curr = head
-        while curr:
-            if curr.next == middle_ListNode:
-                curr.next = None
-            curr = curr.next
+        prev_node, middle_ListNode = self.find_middle_ListNode(head)
+        prev_node.next = None
         reversed_head = self.reverse_list(middle_ListNode)
         curr = head
         next_node = reversed_head
