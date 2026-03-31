@@ -10,8 +10,8 @@ class LRUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.data_store = {}
-        self.head = None
-        self.tail = None
+        self.head = ListNode(-1)
+        self.tail = ListNode(-1)
     
     def print(self, head):
         curr = head
@@ -20,18 +20,22 @@ class LRUCache:
             curr = curr.next
         print()
     
+    def attach_to_tail(self, node):
+        node.prev = self.tail.prev
+        self.tail.prev.next = node
+        self.tail.prev = node
+        node.next = self.tail
+    
     def move_to_tail(self, node):
-        if not node.next:
+        if self.tail.prev == node:
             return # do nothing because the given node itself is the tail
-        if not node.prev:
-            self.head = node.next # means current node is head. so move head to node.next
-        else:
-            node.prev.next = node.next
+        
+        # detach node
+        node.prev.next = node.next
         node.next.prev = node.prev
-        self.tail.next = node
-        node.prev = self.tail
-        node.next = None
-        self.tail = node # moved the node to tail
+
+        #attach to tail
+        self.attach_to_tail(node)
 
     def get(self, key: int) -> int:
         if key not in self.data_store:
@@ -47,20 +51,12 @@ class LRUCache:
             self.move_to_tail(node)
             return
         if len(self.data_store) == self.capacity:
-            head_node = self.head
-            self.data_store.pop(head_node.key)
-            self.head = head_node.next
-            if not self.head:
-                self.tail = None
-            else:
-                self.head.prev = None
+            lru = self.head.next
+            self.data_store.pop(lru.key)
+            self.head.next = lru.next
+            lru.next.prev = self.head
         new_node = ListNode(key, value)
-        if not self.head and not self.tail:
-            self.head = new_node
-        else:
-            self.tail.next = new_node
-            new_node.prev = self.tail
-        self.tail = new_node
+        self.attach_to_tail(new_node)
         self.data_store[key] = new_node
 
 
