@@ -9,7 +9,6 @@ class ListNode:
 class LRUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
-        self.current_size = 0
         self.data_store = {}
         self.head = None
         self.tail = None
@@ -20,41 +19,34 @@ class LRUCache:
             print(f"{curr.key}-{curr.val}", end="->")
             curr = curr.next
         print()
-
-    def get(self, key: int) -> int:
-        if not key in self.data_store:
-            return -1
-        node = self.data_store[key]
-        if self.tail == node:
-            return node.val
-        node.next.prev = node.prev
-        if node.prev:
-            node.prev.next = node.next
+    
+    def move_to_tail(self, node):
+        if not node.next:
+            return # do nothing because the given node itself is the tail
+        if not node.prev:
+            self.head = node.next # means current node is head. so move head to node.next
         else:
-            self.head = self.head.next
+            node.prev.next = node.next
+        node.next.prev = node.prev
         self.tail.next = node
         node.prev = self.tail
         node.next = None
-        self.tail = node
+        self.tail = node # moved the node to tail
+
+    def get(self, key: int) -> int:
+        if key not in self.data_store:
+            return -1
+        node = self.data_store[key]
+        self.move_to_tail(node)
         return node.val
 
     def put(self, key: int, value: int) -> None:
         if key in self.data_store:
             node = self.data_store[key]
             node.val = value
-            if self.tail == node:
-                return
-            node.next.prev = node.prev
-            if node.prev:
-                node.prev.next = node.next
-            else:
-                self.head = self.head.next
-            self.tail.next = node
-            node.prev = self.tail
-            node.next = None
-            self.tail = node
+            self.move_to_tail(node)
             return
-        if self.current_size == self.capacity:
+        if len(self.data_store) == self.capacity:
             head_node = self.head
             self.data_store.pop(head_node.key)
             self.head = head_node.next
@@ -62,7 +54,6 @@ class LRUCache:
                 self.tail = None
             else:
                 self.head.prev = None
-            self.current_size -= 1
         new_node = ListNode(key, value)
         if not self.head and not self.tail:
             self.head = new_node
@@ -71,7 +62,6 @@ class LRUCache:
             new_node.prev = self.tail
         self.tail = new_node
         self.data_store[key] = new_node
-        self.current_size += 1
 
 
 # Your LRUCache object will be instantiated and called as such:
