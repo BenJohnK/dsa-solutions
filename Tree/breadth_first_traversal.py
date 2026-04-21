@@ -22,15 +22,18 @@ class Solution:
     def levelOrder(self, root):
         # code here
         result = []
-        helper_deque = deque()
-        helper_deque.append(root)
+        helper_deque = deque([root])
         while helper_deque:
-            current_node = helper_deque.popleft()
-            result.append(current_node.key)
-            if current_node.left:
-                helper_deque.append(current_node.left)
-            if current_node.right:
-                helper_deque.append(current_node.right)
+            level_lst = []
+            queue_length = len(helper_deque)
+            for _ in range(queue_length):
+                current_node = helper_deque.popleft()
+                level_lst.append(current_node.key)
+                if current_node.left:
+                    helper_deque.append(current_node.left)
+                if current_node.right:
+                    helper_deque.append(current_node.right)
+            result.append(level_lst)
         return result
 
 
