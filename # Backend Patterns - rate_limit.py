@@ -12,14 +12,14 @@ class RateLimitMiddleware:
     def __call__(self, request):
         ip_address = request.headers.get("ip_address")
 
-        key = f"ratelimit: {ip_address}"
+        key = f"ratelimit:{ip_address}"
 
         count = self.redis_client.incr(key) # save the key in redis and increment value by 1
 
         if count == 1:
-            self.redis_client.set_ttl(key, 60)
+            self.redis_client.expire(key, 60)
         
-        if count > 5:
+        if count > self.number_of_max_requests:
             return Response(status=429) # rate limit exceeded message response
         else:
             response = self.get_response(request)
